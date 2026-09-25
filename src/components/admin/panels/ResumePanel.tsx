@@ -33,6 +33,7 @@ import { ResumeAboutIntroductionSection } from "@/components/admin/resume/Resume
 import { ResumeBasicsSection } from "@/components/admin/resume/ResumeBasicsSection";
 import { ResumeBasicsPresentationSection } from "@/components/admin/resume/ResumeBasicsPresentationSection";
 import { ResumeAwardImageField } from "@/components/admin/resume/ResumeAwardImageField";
+import ResumeTrainingEditor from "@/components/admin/resume/ResumeTrainingEditor";
 import { ResumeSectionNavigation } from "@/components/admin/resume/ResumeSectionNavigation";
 import { GripVertical, Trash2 } from "lucide-react";
 import SkillsAdminSection from "@/components/admin/skills/SkillsAdminSection";
@@ -3889,6 +3890,18 @@ export default function ResumePanel() {
                             ))}
                         </div>
                     </section>
+                </div>
+
+                <div
+                    data-resume-section="training"
+                    style={sectionWrapperStyle("training")}
+                >
+                    <ResumeTrainingEditor
+                        resume={resumeData}
+                        jobFields={jobFields}
+                        activeJobField={activeJobField}
+                        onChange={setResumeData}
+                    />
                 </div>
 
                 {/* 수상 (Awards) */}

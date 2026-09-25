@@ -8,6 +8,7 @@ import type {
 } from "@/types/resume";
 import CoreCompetencyMarkdown from "@/components/resume/CoreCompetencyMarkdown";
 import EducationMetadata from "@/components/resume/EducationMetadata";
+import TrainingSection from "@/components/resume/TrainingSection";
 import LanguagesSection from "@/components/resume/LanguagesSection";
 import {
     getResumeSectionLabel,
@@ -361,6 +362,13 @@ export default function ResumeModernPreview({
         projects: renderProjects,
         skills: renderSkills,
         education: renderEducation,
+        training: () => (
+            <TrainingSection
+                key="training"
+                entries={resume.training?.entries ?? []}
+                label={getLabel("training")}
+            />
+        ),
         volunteer: () =>
             renderGrid(
                 "volunteer",

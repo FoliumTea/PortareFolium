@@ -9,6 +9,7 @@ import { getResumeProfileBrand } from "@/lib/resume-profile-preset";
 import { renderMarkdown } from "@/lib/markdown";
 import CoreCompetencyMarkdown from "@/components/resume/CoreCompetencyMarkdown";
 import EducationMetadata from "@/components/resume/EducationMetadata";
+import TrainingSection from "@/components/resume/TrainingSection";
 import LanguagesSection from "@/components/resume/LanguagesSection";
 import AwardsSection from "@/components/resume/AwardsSection";
 import SkillsSection from "@/components/resume/SkillsSection";
@@ -590,6 +591,13 @@ export default async function ResumeModern({
         projects: renderProjects,
         skills: renderSkills,
         education: renderEducation,
+        training: () => (
+            <TrainingSection
+                key="training"
+                entries={resume.training?.entries ?? []}
+                label={getLabel("training")}
+            />
+        ),
         volunteer: renderVolunteer,
         awards: renderAwards,
         certificates: renderCertificates,

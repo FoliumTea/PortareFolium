@@ -11,6 +11,7 @@ import {
 import { renderMarkdown } from "@/lib/markdown";
 import CoreCompetencyMarkdown from "@/components/resume/CoreCompetencyMarkdown";
 import LanguagesSection from "@/components/resume/LanguagesSection";
+import TrainingSection from "@/components/resume/TrainingSection";
 import AwardsSection from "@/components/resume/AwardsSection";
 import SkillsSection from "@/components/resume/SkillsSection";
 import CareerPhasesSection from "@/components/resume/CareerPhasesSection";
@@ -423,6 +424,14 @@ export default async function ResumeClassic({
         skills: renderSkills,
         work: renderWork,
         education: renderEducation,
+        training: () => (
+            <TrainingSection
+                key="training"
+                entries={resume.training?.entries ?? []}
+                label={getLabel("training")}
+                variant="classic"
+            />
+        ),
         projects: renderProjects,
         volunteer: () =>
             renderGeneric(

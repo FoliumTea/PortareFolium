@@ -8,6 +8,7 @@ import type {
 } from "@/types/resume";
 import CoreCompetencyMarkdown from "@/components/resume/CoreCompetencyMarkdown";
 import LanguagesSection from "@/components/resume/LanguagesSection";
+import TrainingSection from "@/components/resume/TrainingSection";
 import {
     getResumeSectionLabel,
     resolveSectionOrder,
@@ -310,6 +311,14 @@ export default function ResumeClassicPreview({
         skills: renderSkills,
         work: renderWork,
         education: renderEducation,
+        training: () => (
+            <TrainingSection
+                key="training"
+                entries={resume.training?.entries ?? []}
+                label={getLabel("training")}
+                variant="classic"
+            />
+        ),
         projects: renderProjects,
         volunteer: () =>
             renderGeneric(

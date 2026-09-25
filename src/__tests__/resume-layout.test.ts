@@ -37,6 +37,12 @@ describe("getResumeSectionLabel", () => {
             })
         ).toBe("💻 기술");
     });
+
+    it("교육 섹션 이름을 관리자 설정으로 바꿀 수 있다", () => {
+        expect(getResumeSectionLabel("training", { label: "직무 교육" })).toBe(
+            "직무 교육"
+        );
+    });
 });
 
 // 테스트용 resume 팩토리 (모든 섹션 entries 1개씩)
@@ -58,6 +64,13 @@ function makeFullResume(): Resume {
         projects: sec({ name: "pr1" }),
         skills: sec({ name: "s1" }),
         education: sec({ institution: "e1" }),
+        training: sec({
+            title: "t1",
+            organizer: "o1",
+            startMonth: "2026-01",
+            endMonth: "2026-07",
+            jobField: "game",
+        }),
         volunteer: sec({ organization: "v1" }),
         awards: sec({ title: "a1" }),
         certificates: sec({ name: "c1" }),
@@ -69,18 +82,19 @@ function makeFullResume(): Resume {
 }
 
 describe("DEFAULT_RESUME_LAYOUT", () => {
-    it("order starts with the 5 default-enabled sections in spec sequence", () => {
-        expect(DEFAULT_RESUME_LAYOUT.order.slice(0, 5)).toEqual([
+    it("order starts with the default-enabled sections in spec sequence", () => {
+        expect(DEFAULT_RESUME_LAYOUT.order.slice(0, 6)).toEqual([
             "coreCompetencies",
             "work",
             "projects",
             "education",
+            "training",
             "skills",
         ]);
     });
 
-    it("contains all 13 controllable section keys in order", () => {
-        expect(DEFAULT_RESUME_LAYOUT.order).toHaveLength(13);
+    it("contains all 14 controllable section keys in order", () => {
+        expect(DEFAULT_RESUME_LAYOUT.order).toHaveLength(14);
         expect(new Set(DEFAULT_RESUME_LAYOUT.order)).toEqual(
             new Set(ALL_RESUME_SECTION_KEYS)
         );
@@ -113,8 +127,20 @@ describe("normalizeLayout", () => {
         const partial = { order: ["work"], disabled: [] };
         const result = normalizeLayout(partial);
         expect(result.order[0]).toBe("work");
-        expect(result.order).toHaveLength(13);
+        expect(result.order).toHaveLength(14);
         expect(new Set(result.order)).toEqual(new Set(ALL_RESUME_SECTION_KEYS));
+    });
+
+    it("기존 레이아웃에는 교육 섹션을 학력 바로 뒤에 배치한다", () => {
+        const result = normalizeLayout({
+            order: ["education", "skills"],
+            disabled: [],
+        });
+        expect(result.order.slice(0, 3)).toEqual([
+            "education",
+            "training",
+            "skills",
+        ]);
     });
 
     it("drops unknown keys from order and disabled", () => {
@@ -155,6 +181,7 @@ describe("resolveSectionOrder", () => {
             disabled: [
                 "coreCompetencies",
                 "education",
+                "training",
                 "careerPhases",
                 "volunteer",
                 "awards",
@@ -206,6 +233,7 @@ describe("resolveSectionOrder", () => {
             "work",
             "projects",
             "education",
+            "training",
             "skills",
         ]);
     });
